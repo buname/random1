@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { ChevronDown, RefreshCw, Clock, Unlink } from "lucide-react";
 import { TICKERS, TickerSymbol } from "@/lib/constants";
+import TopLeftLogo from "@/components/ui/TopLeftLogo";
 
 interface NewsItem {
   id: string;
@@ -126,13 +127,8 @@ export default function Header({
   return (
     <div className="shrink-0">
       <header className="panel-sheen flex h-12 items-center gap-2 border-b border-white/[0.04] bg-[#050506] px-2 sm:gap-3 sm:px-3">
-        <div className="flex flex-col leading-none">
-          <span className="text-[11px] font-bold text-white tracking-tight font-mono lowercase">
-            bex
-          </span>
-          <span className="text-[8px] text-[#525252] font-mono tracking-[0.2em] uppercase">
-            options analytics
-          </span>
+        <div className="mr-2 flex shrink-0 items-center">
+          <TopLeftLogo />
         </div>
 
         <div className="relative" ref={ref}>

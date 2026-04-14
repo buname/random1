@@ -152,7 +152,7 @@ export default function GeopoliticalRiskMap({ onClose }: GeopoliticalRiskMapProp
 
   return (
     <div className="flex items-center justify-center p-4">
-      <div className="relative mx-auto h-[500px] w-full max-w-[1400px] overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] shadow-2xl md:h-[550px] lg:h-[600px]">
+      <div className="terminal-card relative mx-auto h-[500px] w-full max-w-[1400px] overflow-hidden rounded-lg md:h-[550px] lg:h-[600px]">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}

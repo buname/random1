@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 function isBlockedShortcut(event: KeyboardEvent): boolean {
@@ -13,6 +14,7 @@ function isBlockedShortcut(event: KeyboardEvent): boolean {
 }
 
 export default function SecurityDeterrence() {
+  const pathname = usePathname();
   const reason = useMemo(() => {
     if (typeof window === "undefined") return null;
     if (window.self !== window.top) return "This app is blocked inside iframes.";
@@ -47,8 +49,11 @@ export default function SecurityDeterrence() {
 
   if (!shortcutTriggered && !reason) return null;
 
+  /* Minimal landing: no corner chrome (also avoids stacking with dev tooling). */
+  if (pathname === "/") return null;
+
   return (
-    <div className="pointer-events-none fixed bottom-3 right-3 z-[100] max-w-xs rounded border border-amber-400/40 bg-[#130f04]/95 p-3 text-[11px] text-amber-200 shadow-xl">
+    <div className="pointer-events-none fixed bottom-3 left-3 z-[100] max-w-xs rounded border border-amber-400/40 bg-[#130f04]/95 p-3 text-[11px] text-amber-200 shadow-xl">
       <p className="font-semibold">Protection Notice</p>
       <p className="mt-1 text-amber-100/80">
         {reason ?? "Inspection shortcuts are disabled as a deterrent only. Sensitive logic remains on the server."}

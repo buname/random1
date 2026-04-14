@@ -1,31 +1,44 @@
 import type { NextConfig } from "next";
 import WebpackObfuscator from "webpack-obfuscator";
 
-const securityHeaders = [
+const baseSecurityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-  {
-    key: "Content-Security-Policy",
-    value: [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline'",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https:",
-      "font-src 'self' data: https:",
-      "connect-src 'self' https:",
-      "frame-ancestors 'none'",
-      "object-src 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "upgrade-insecure-requests",
-    ].join("; "),
-  },
 ];
+
+function getSecurityHeaders() {
+  if (process.env.NODE_ENV !== "production") {
+    // Dev needs eval + websocket/HMR; strict CSP here can cause false 404/boot failures.
+    return baseSecurityHeaders;
+  }
+
+  return [
+    ...baseSecurityHeaders,
+    {
+      key: "Content-Security-Policy",
+      value: [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: blob: https:",
+        "font-src 'self' data: https:",
+        "connect-src 'self' https:",
+        "frame-ancestors 'none'",
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "upgrade-insecure-requests",
+      ].join("; "),
+    },
+  ];
+}
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Hide the floating dev status pill so the cinematic landing stays clean in `npm run dev`.
+  devIndicators: false,
   turbopack: {
     // Force Next to use this project folder as root (avoids parent lockfile inference).
     root: process.cwd(),
@@ -79,7 +92,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [{ source: "/:path*", headers: getSecurityHeaders() }];
   },
 };
 

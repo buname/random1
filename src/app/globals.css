@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #050506;
-  --bg-secondary: #060607;
-  --bg-card: #0d0d0f;
-  --bg-elevated: #111113;
-  --border-color: rgba(255, 255, 255, 0.06);
-  --border-accent: rgba(255, 255, 255, 0.1);
-  --text-primary: #e4e4e7;
-  --text-secondary: #71717a;
-  --text-muted: #52525b;
-  --accent-green: #16a34a;
-  --accent-red: #dc2626;
-  --accent-yellow: #ea580c;
-  --accent-blue: #2563eb;
-  --accent-cyan: #0e7490;
-  --accent-purple: #9333ea;
-  --accent-purple-dim: #7e22ce;
+  --bg-primary: #050505;
+  --bg-secondary: #0b0b0b;
+  --bg-card: #0f0f0f;
+  --bg-elevated: #141414;
+  --border-color: #262626;
+  --border-accent: #303030;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-yellow: #a1a1aa;
+  --accent-blue: #a1a1aa;
+  --accent-cyan: #d4d4d8;
+  --accent-purple: #a1a1aa;
+  --accent-purple-dim: #71717a;
 }
 
 @theme inline {
@@ -46,7 +46,9 @@
 }
 
 body {
-  background: var(--bg-primary);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 42%),
+    linear-gradient(180deg, #070707 0%, var(--bg-primary) 40%, #040404 100%);
   color: var(--text-primary);
   font-family: var(--font-sans), system-ui, sans-serif;
   transition: background-color 300ms ease, color 300ms ease;
@@ -54,13 +56,26 @@ body {
 
 .panel-sheen {
   background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0)),
-    linear-gradient(120deg, rgba(37, 99, 235, 0.02), rgba(147, 51, 234, 0.014) 45%, rgba(0, 0, 0, 0) 80%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.012), rgba(0, 0, 0, 0) 70%);
 }
 
 ::selection {
-  background: rgba(22, 163, 74, 0.2);
+  background: rgba(255, 255, 255, 0.18);
   color: #fff;
+}
+
+.terminal-card {
+  background: rgba(15, 15, 15, 0.55);
+  border: 1px solid #262626;
+  backdrop-filter: blur(12px);
+  border-radius: 0.5rem;
+}
+
+.data-value,
+.tabular-nums {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 @keyframes fadeIn {
@@ -90,6 +105,64 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Cinematic welcome: sharp text (fade only) + staggered CTA */
+@keyframes welcome-title-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes welcome-cta-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.welcome-cinematic-title {
+  opacity: 0;
+  animation: welcome-title-fade 1.5s ease-out forwards;
+}
+
+.welcome-cinematic-cta {
+  opacity: 0;
+  animation: welcome-cta-fade 1.2s ease-out 0.8s forwards;
+}
+
+/* Top-left sparkle: soft breathing glow (dashboard mark only) */
+@keyframes top-left-logo-breathe {
+  0%,
+  100% {
+    filter:
+      drop-shadow(0 0 1px rgba(255, 255, 255, 0.5))
+      drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+    opacity: 0.7;
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 2px rgba(255, 255, 255, 0.95))
+      drop-shadow(0 0 10px rgba(255, 255, 255, 0.38));
+    opacity: 1;
+  }
+}
+
+.top-left-logo-breathe {
+  animation: top-left-logo-breathe 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top-left-logo-breathe {
+    animation: none;
+    opacity: 0.88;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
+  }
 }
 
 .animate-slide-up {

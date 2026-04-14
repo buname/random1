@@ -56,9 +56,9 @@ export default function UIOverlay({
         Geopolitical Risk Map
       </div>
 
-      <div className="absolute right-[180px] top-4 z-30 hidden min-w-[160px] rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white backdrop-blur-md transition-all duration-200 sm:block">
+      <div className="terminal-card absolute right-6 top-6 z-50 hidden min-w-[170px] px-3 py-2.5 text-white transition-all duration-200 sm:block">
         <div className="text-[9px] uppercase tracking-[0.18em] text-white/50">Global Risk Index</div>
-        <div className="mt-1 text-2xl font-semibold tabular-nums">
+        <div className="data-value mt-1 text-2xl font-semibold tabular-nums">
           {loading ? "..." : globalRisk.score.toFixed(1)}
         </div>
         <div className="text-[10px] uppercase tracking-wide text-white/65">
@@ -66,8 +66,8 @@ export default function UIOverlay({
         </div>
       </div>
 
-      <div className="absolute right-4 top-4 z-30 flex items-center gap-2 pointer-events-auto">
-        <div className="hidden items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 backdrop-blur-md md:flex">
+      <div className="absolute right-6 top-[5.75rem] z-30 flex items-center gap-2 pointer-events-auto">
+        <div className="terminal-card hidden items-center gap-1 px-2 py-1.5 md:flex">
           {(["all", "conflict", "tension", "sanction", "hub"] as const).map((entry) => (
             <button
               key={entry}
@@ -88,7 +88,7 @@ export default function UIOverlay({
           onChange={(e) =>
             onFilterChange(e.target.value as "all" | "conflict" | "tension" | "sanction" | "hub")
           }
-          className="rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-white backdrop-blur-md md:hidden"
+          className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-2 py-1 text-[11px] text-white backdrop-blur-md md:hidden"
           aria-label="Risk filter"
         >
           <option value="all">All</option>
@@ -97,7 +97,7 @@ export default function UIOverlay({
           <option value="sanction">Sanction</option>
           <option value="hub">Hub</option>
         </select>
-        <div className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 backdrop-blur-md">
+        <div className="terminal-card flex items-center gap-1.5 px-2 py-1.5">
           <Search className="h-3.5 w-3.5 text-white/45" />
           <input
             id="risk-map-search"
@@ -107,7 +107,7 @@ export default function UIOverlay({
             className="w-28 bg-transparent text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 sm:w-40"
           />
         </div>
-        <div className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 backdrop-blur-md">
+        <div className="terminal-card flex items-center gap-1.5 px-2 py-1.5">
           <button
             type="button"
             onClick={onZoomOut}
@@ -155,7 +155,7 @@ export default function UIOverlay({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut", delay: 0.04 }}
-        className="absolute bottom-4 left-6 z-30 hidden min-w-[220px] rounded-md border border-white/15 bg-black/55 px-4 py-3 backdrop-blur-sm sm:block"
+        className="terminal-card absolute bottom-4 left-6 z-30 hidden min-w-[220px] px-4 py-3 sm:block"
       >
         <div className="mb-1 text-[8px] uppercase tracking-[0.18em] text-white/45">Risk Indicators</div>
         <div className="flex items-center gap-2 text-[10px] text-white/75">
@@ -165,7 +165,7 @@ export default function UIOverlay({
       </motion.div>
 
       {loading ? (
-        <div className="absolute inset-x-0 top-16 z-30 mx-auto max-w-[320px] rounded border border-white/10 bg-black/40 px-4 py-2 text-center text-xs text-white/60">
+        <div className="terminal-card absolute inset-x-0 top-16 z-30 mx-auto max-w-[320px] px-4 py-2 text-center text-xs text-white/60">
           Loading risk data...
         </div>
       ) : null}
